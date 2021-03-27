@@ -1,0 +1,22 @@
+body {
+    background-color: #f3f3f3;
+}
+
+.dark-link {
+    color: darkslategray;
+    text-decoration: underline;
+}
+
+.WOtitle {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.calendar-table {
+    height: 300px;
+    max-height: 400px;
+  }
+
+#numSelectCaret:hover {
+    color:blue;
+    cursor: pointer;
+}
