@@ -8,6 +8,15 @@ class Users extends Controller
         $this->userModel = $this->model('User');
     }
 
+    public function index()
+    {
+        if(isset($_SESSION['user_id'])){
+            redirect('mods/');
+        }else{
+            redirect('users/login');
+        }
+    }
+
     public function register()
     {
         // Check for POST
@@ -86,6 +95,9 @@ class Users extends Controller
 
 
         } else {
+            if (isset($_SESSION['user_id'])){
+                redirect('mods');
+            }
             // Init data
             $data = [
                 'user_email' => '',
@@ -146,6 +158,7 @@ class Users extends Controller
 
                 if($loggedInUser){
                     // Create Session
+                    $this->createUserSession($loggedInUser);
                 }else{
                     $data['password_err'] = 'Password incorrect';
 
@@ -156,6 +169,9 @@ class Users extends Controller
                 $this->view('users/login', $data);
             }
         }else{
+            if (isset($_SESSION['user_id'])){
+                redirect('mods');
+            }
             // Init data
             $data = [
                 'user_email' => '',
@@ -175,7 +191,15 @@ class Users extends Controller
         $_SESSION['user_last'] = $user->user_last;
         $_SESSION['user_email'] = $user->user_email;
         //redirect
-        // WORK ON REGIMEN MODEL --------------------->>>>>>>>>>>>>>>>>>>>>>>
+        redirect('mods');
     }
 
+    public function logout(){
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_first']);
+        unset($_SESSION['user_last']);
+        unset($_SESSION['user_email']);
+        session_destroy();
+        redirect('users/login');
+    }
 }

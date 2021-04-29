@@ -22,4 +22,10 @@
             ];
             $this->view('pages/about', $data);
         }
+
+        public function test(){
+            $data = [];
+
+            $this->view('pages/test', $data);
+        }
     }

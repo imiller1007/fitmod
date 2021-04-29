@@ -2,8 +2,7 @@
 <div class="container mt-5" id="card-section">
 
     <div class="row">
-        <div class="offset-md-2 offset-xs-0"></div>
-        <div class="col-xs-12 col-sm-12 col-med-6 text-center">
+        <div class="offset-lg-3 offset-xs-0 col-xs-12 col-sm-12 col-lg-6 text-center">
             <h2 style="font-family: 'Montserrat', sans-serif;">Newest Mods</h2>
             <hr>
         </div>
@@ -11,7 +10,7 @@
 
     <div class="row">
         <div class="offset-md-2 offset-xs-0"></div>
-        <div class="col-xs-12 col-sm-12 text-center">
+        <div class="col-xs-12 col-sm-12">
 
             <?php foreach ($data['mods'] as $mod) : ?>
                 <div class="card">
@@ -20,7 +19,7 @@
                         <p class="card-text"><?php echo $mod->mod_desc; ?></p>
                         <table class="table">
                             <thead>
-                                <tr>
+                                <tr class="table-dark">
                                     <th scope="col" style="width: 33%;">Exercise</th>
                                     <th scope="col" style="width: 33%;">Set Count</th>
                                     <th scope="col" style="width: 33%;">Target</th>
