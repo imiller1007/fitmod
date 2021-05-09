@@ -29,4 +29,16 @@ class Exercise
         $this->db->query('SELECT * FROM exercises');
         return $this->db->resultSet();
     }
+
+    public function getExerciseById($exerciseID){
+        $this->db->query('SELECT * FROM exercises WHERE exercise_id = :exercise_id');
+        $this->db->bind(':exercise_id', $exerciseID);
+        return $this->db->single();
+    }
+
+    public function getExerciseByName($exerciseName){
+        $this->db->query('SELECT * FROM exercises WHERE exercise_name = :exercise_name');
+        $this->db->bind(':exercise_name', $exerciseName);
+        return $this->db->single();
+    }
 }

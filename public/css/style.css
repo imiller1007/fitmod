@@ -1,22 +1,45 @@
 body {
-    background-color: #f3f3f3;
+  background-color: #f3f3f3;
 }
 
 .dark-link {
-    color: darkslategray;
-    text-decoration: underline;
+  color: darkslategray;
+  text-decoration: underline;
 }
 
-.WOtitle {
-    font-family: 'Montserrat', sans-serif;
+.titleFont {
+  font-family: "Montserrat", sans-serif;
 }
 
+/* SCHEDULE PAGE */
 .calendar-table {
-    height: 300px;
-    max-height: 400px;
-  }
+  height: 300px;
+  max-height: 400px;
+}
 
+/* ADD NEW MOD PAGE */
 #numSelectCaret:hover {
-    color:blue;
-    cursor: pointer;
+  color: blue;
+  cursor: pointer;
+}
+
+/* PAGINATION */
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: darkslategray;
+  color: #f3f3f3;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
 }

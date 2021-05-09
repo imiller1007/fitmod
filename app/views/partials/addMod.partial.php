@@ -1,9 +1,9 @@
 <div id="exer<?= $i ?>" class="exergroup">
     <?php echo ($i > 1 ? '<hr>' : ''); ?>
-    <h4 id="exerTitle<?= $i ?>" class="card-title WOtitle">Exercise <?php echo $i ?></h4>
+    <h4 id="exerTitle<?= $i ?>" class="card-title titleFont">Exercise <?php echo $i ?></h4>
     <div class="mb-3">
         <label class="form-label" for="exerciseName<?= $i ?>">Exercise Name</label>
-        <input type="text" list="exerciseOptions" class="form-control <?php echo (!empty($errors['exerNameErr' . $i])) ? 'is-invalid' : ''; ?>" name="exerciseName<?= $i ?>" id="exerciseName<?= $i ?>" value="<?php echo $inputData['exerciseName' . $i] ?>" oninput="checkIfExerciseExists(<?= $i ?>)">
+        <input type="text" list="exerciseOptions" maxlength="80" class="form-control <?php echo (!empty($errors['exerNameErr' . $i])) ? 'is-invalid' : ''; ?>" name="exerciseName<?= $i ?>" id="exerciseName<?= $i ?>" value="<?php echo $inputData['exerciseName' . $i] ?>" oninput="checkIfExerciseExists(<?= $i ?>)">
         <datalist id="exerciseOptions">
             <?php foreach ($data['exercises'] as $exercise) : ?>
                 <option value="<?php echo $exercise->exercise_name ?>">

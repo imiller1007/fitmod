@@ -7,12 +7,7 @@
         }
 
         public function index(){
-
-            $data = [
-                'title' => 'Welcome'
-            ];
-
-            $this->view('pages/index', $data);
+            redirect('mods');
         }
 
 

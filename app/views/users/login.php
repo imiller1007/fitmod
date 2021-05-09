@@ -6,7 +6,7 @@
         <?php flash('register_success'); ?>
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title WOtitle text-center">Log In</h3>
+                    <h3 class="card-title titleFont text-center">Log In</h3>
                     <br>
                     <form action="<?php echo URLROOT; ?>/users/login" method="post">
                         <div class="mb-3">

@@ -6,7 +6,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title WOtitle text-center">Sign Up</h3>
+                    <h3 class="card-title titleFont text-center">Sign Up</h3>
                     <br>
                     <form action="<?php echo URLROOT; ?>/users/register" method="post">
                         <div class="form-group mb-3">

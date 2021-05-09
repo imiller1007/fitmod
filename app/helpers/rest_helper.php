@@ -25,3 +25,8 @@ function wgerCall($category, $value = null)
 
     curl_close($curl);
 }
+
+function error($msg) {
+    $response = array('success' => false, 'message' => $msg);
+    return json_encode($response);
+}

@@ -15,7 +15,7 @@
 
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title WOtitle">Starter Workout</h3>
+        <h3 class="card-title titleFont">Starter Workout</h3>
         <p class="card-text">A good beginner workout that targets the entire body.</p>
         <table class="table">
           <thead>
@@ -55,7 +55,7 @@
 
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title WOtitle">QUAD KILLER</h3>
+        <h3 class="card-title titleFont">QUAD KILLER</h3>
         <p class="card-text">Intense workout targeting quads</p>
         <table class="table">
           <thead>

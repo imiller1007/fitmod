@@ -17,19 +17,19 @@ function selectCheck($selectName, $selectValue)
         <form action="<?php echo URLROOT; ?>/mods/add" id="modForm" autocomplete="off" method="POST">
             <div class="card">
                 <div class="card-body">
-                    <!-- <h3 class="card-title WOtitle text-center">New Workout Mod</h3> -->
-                    <input class="form-control form-control-lg WOtitle text-center  <?php echo (!empty($errors['titleErr'])) ? 'is-invalid' : ''; ?>" type="text" name="title" placeholder="New Workout Mod Title" value="<?php echo $inputData['title'] ?>" aria-label=".form-control-lg">
-                    <span class="invalid-feedback"><?php echo $errors['exerNumErr' . $i] ?></span>
+                    <!-- <h3 class="card-title titleFont text-center">New Workout Mod</h3> -->
+                    <input class="form-control form-control-lg titleFont text-center  <?php echo (!empty($errors['titleErr'])) ? 'is-invalid' : ''; ?>" maxlength="80" type="text" name="title" placeholder="New Workout Mod Title" value="<?php echo $inputData['title'] ?>" aria-label=".form-control-lg" required>
+                    <span class="invalid-feedback"><?php echo $errors['titleErr'] ?></span>
                     <br>
                     <div>
-                        <h5 class="card-title WOtitle text-center">Number of Workouts</h5>
-                        <input name="exerciseNum" type="hidden" class="form-control" id="exerciseNum" value="<?php echo $data['numOfExer'] ?>">
+                        <h5 class="card-title titleFont text-center">Number of Workouts</h5>
+                        <input name="numOfExer" type="hidden" class="form-control" id="numOfExer" value="<?php echo $data['numOfExer'] ?>">
                         <div class="row">
                             <div class="col-4 text-center">
                                 <h1 id="numSelectCaret" onclick="updateForm('decrement')"><i class="fas fa-caret-left"></i></h1>
                             </div>
                             <div class="col-4 text-center">
-                                <h1 id="exerciseNumDisplay" class="WOtitle">0</h1>
+                                <h1 id="numOfExerDisplay" class="titleFont">0</h1>
                             </div>
                             <div class="col-4 text-center">
                                 <h1 id="numSelectCaret" onclick="updateForm('increment')"><i class="fas fa-caret-right"></i></h1>
@@ -40,7 +40,7 @@ function selectCheck($selectName, $selectValue)
                         </div>
                         <br>
                         <div class="mb-5">
-                            <textarea name="desc" id="desc" class="form-control WOtitle <?php echo (!empty($errors['descErr'])) ? 'is-invalid' : ''; ?>" maxlength="200" cols="80" rows="5" placeholder="Description . . . " onkeyup="updateDescCounter()" onchange="updateDescCounter()"><?php echo $inputData['desc'] ?></textarea>
+                            <textarea name="desc" id="desc" class="form-control titleFont <?php echo (!empty($errors['descErr'])) ? 'is-invalid' : ''; ?>" maxlength="200" cols="80" rows="5" placeholder="Description . . . " onkeyup="updateDescCounter()" onchange="updateDescCounter()" required><?php echo $inputData['desc'] ?></textarea>
                             <span id="descCounter" class="pull-right"><small><span id="descCounterNum">0</span>/200</small></span>
                             <span class="invalid-feedback"><?php echo $errors['descErr'] ?></span>
                         </div>
@@ -58,7 +58,7 @@ function selectCheck($selectName, $selectValue)
                     <?php
 
                     // Loop through form section 
-                    for ($i = 1; $i <= 10; $i++) {
+                    for ($i = 1; $i <= EXERCISEMAX; $i++) {
                         require APPROOT . '/views/partials/addMod.partial.php';
                     }
 
@@ -84,7 +84,7 @@ function selectCheck($selectName, $selectValue)
 
     // hide all exercise cards
     function hideAll() {
-        for (var i = 1; i <= 10; i++) {
+        for (var i = 1; i <= <?php echo EXERCISEMAX ?>; i++) {
             $("#exer" + i).hide();
             requireFields(i, false);
         }
@@ -107,7 +107,7 @@ function selectCheck($selectName, $selectValue)
     // triggers after # of exercises is established
     function initializeForm() {
         if (formInitialized == false) {
-            var numOfExercises = $("#exerciseNum").val();
+            var numOfExercises = $("#numOfExer").val();
             $("#initBtnDiv").slideUp(500);
             showExerGroups(numOfExercises);
             workoutCard.slideDown(500);
@@ -117,24 +117,23 @@ function selectCheck($selectName, $selectValue)
 
     // adds/removes exercise cards as # of exercises is changed
     function updateForm(operator) {
-        var numOfExercises = $("#exerciseNum").val();
+        var numOfExercises = $("#numOfExer").val();
         if (operator == "decrement") {
             var inputToDisable = numOfExercises;
             if (numOfExercises > 1) {
                 numOfExercises--;
-                $("#exerciseNum").val(numOfExercises);
-                $("#exerciseNumDisplay").text(numOfExercises);
+                $("#numOfExer").val(numOfExercises);
+                $("#numOfExerDisplay").text(numOfExercises);
                 if (formInitialized == true) {
-                    console.log(inputToDisable);
                     $("#exer" + inputToDisable).slideUp(500);
                     requireFields(inputToDisable, false);
                 }
             }
         } else {
-            if (numOfExercises < 10) {
+            if (numOfExercises < <?php echo EXERCISEMAX ?>) {
                 numOfExercises++;
-                $("#exerciseNum").val(numOfExercises);
-                $("#exerciseNumDisplay").text(numOfExercises);
+                $("#numOfExer").val(numOfExercises);
+                $("#numOfExerDisplay").text(numOfExercises);
                 if (formInitialized == true) {
                     $("#exer" + numOfExercises).slideDown(500);
                     requireFields(numOfExercises, true);
@@ -157,7 +156,7 @@ function selectCheck($selectName, $selectValue)
 
     // checks all exercises of their appropriate Num Label (for POST-backs)
     function fullnumLabelChange() {
-        for (var i = 1; i <= 10; i++) {
+        for (var i = 1; i <= <?php echo EXERCISEMAX ?>; i++) {
             numLabelChange(i);
         }
     }
@@ -184,6 +183,7 @@ function selectCheck($selectName, $selectValue)
         if (exerType == "cardio") {
             $("#exerciseNumLabel" + exerciseNum).text("Duration (in minutes)");
             $("input[name='exerciseNum" + exerciseNum + "']").prop('max', false);
+            $("#exerciseType" + exerciseNum + " option:contains('Cardio Exercise')").prop('selected', true)
         } else if(exerType != '') {
             $("#exerciseNumLabel" + exerciseNum).text("Sets (Max: 10)");
             $("input[name='exerciseNum" + exerciseNum + "']").prop('max', 10);
@@ -210,7 +210,7 @@ function selectCheck($selectName, $selectValue)
 
     // function to check all exercise names on POST-back
     function fullExerciseExistCheck() {
-        for (var i = 1; i <= 10; i++) {
+        for (var i = 1; i <= <?php echo EXERCISEMAX ?>; i++) {
             checkIfExerciseExists(i);
         }
     }
@@ -218,20 +218,20 @@ function selectCheck($selectName, $selectValue)
     // document.ready
     $(document).ready(function() {
         workoutCard.hide();
-        var numOfExercises = $("#exerciseNum").val();
+        var numOfExercises = $("#numOfExer").val();
         hideAll();
         fullnumLabelChange();
         fullExerciseExistCheck();
         if (numOfExercises !== "" && numOfExercises > 0) {
             formInitialized = true;
-            $("#exerciseNumDisplay").text(numOfExercises);
+            $("#numOfExerDisplay").text(numOfExercises);
             $("#initBtnDiv").slideUp(500);
             showExerGroups(numOfExercises);
             updateDescCounter();
             workoutCard.slideDown(500);
         } else {
-            $("#exerciseNum").val(1);
-            $("#exerciseNumDisplay").text(1);
+            $("#numOfExer").val(1);
+            $("#numOfExerDisplay").text(1);
         }
     });
 </script>

@@ -76,9 +76,15 @@
             return $this->stmt->fetch(PDO::FETCH_OBJ);
         }
 
-        // Get row count
+        // Get row count (affected by a DELETE, INSERT, or UPDATE statement)
         public function rowCount(){
             return $this->stmt->rowCount();
+        }
+
+        // Get row count from SELECT COUNT
+        public function selectCount(){
+            $this->execute();
+            return $this->stmt->fetch(PDO::FETCH_COLUMN);
         }
     }
     

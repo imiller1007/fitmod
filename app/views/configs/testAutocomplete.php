@@ -29,8 +29,6 @@ $(document).ready(function(){
         exerciseArr.push(<?php echo json_encode($exercise); ?>);
 
     <?php endforeach; ?>
-
-    console.log(exerciseArr);
     
 });
 
