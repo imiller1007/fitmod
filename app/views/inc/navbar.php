@@ -29,8 +29,12 @@
                             Hi, <?php echo $_SESSION['user_first'] .' '. substr($_SESSION['user_last'], 0, 1).'.'; ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#"><strong><i>Start Workout</i></strong> <i class="fas fa-running"></i></a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="#">My Mods</a></li>
-                            <li><a class="dropdown-item" href="#">My Schedule</a></li>
+                            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/schedule">My Schedule</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

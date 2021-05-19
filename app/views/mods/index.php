@@ -46,7 +46,7 @@ $paginationLink = 'mods';
                                     <?php $exerType = 'exer' . $i . 'Type'; ?>
                                     <?php if ($mod->$exerName != null) : ?>
                                         <tr>
-                                            <th scope="row"><a class="dark-link" href="https://www.google.com/search?q=<?php echo str_replace(' ', '+', $mod->$exerName); ?>+exercise" target="_blank" rel="noopener noreferrer"><i class="far fa-question-circle"></i></a> <?php echo $mod->$exerName; ?></th>
+                                            <th scope="row"><a class="link-dark" href="https://www.google.com/search?q=<?php echo str_replace(' ', '+', $mod->$exerName); ?>+exercise" target="_blank" rel="noopener noreferrer"><i class="far fa-question-circle"></i></a> <?php echo $mod->$exerName; ?></th>
                                             <td><?php
                                                 if ($mod->$exerType != 'cardio') {
                                                     echo $mod->$exerNum . ' Sets';
@@ -78,11 +78,6 @@ $paginationLink = 'mods';
                         </div>
                         <div class="row mt-2">
                             <span class="text-danger text-center mx-auto modErrorMessage" id="error<?php echo $mod->mod_id ?>"></span>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="offset-lg-4 col-lg-4 offset-md-0 col-md-12 text-center">
-                                <a href="#" class="dark-link">View Comments (0)</a>
-                            </div>
                         </div>
                     </div>
                 </div>

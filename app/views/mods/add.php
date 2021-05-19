@@ -64,7 +64,7 @@ function selectCheck($selectName, $selectValue)
 
                     ?>
 
-                    <div class="mb-3 text-center">
+                    <div class="mb-1 text-center">
                         <input class="btn btn-dark" type="submit" value="Save Workout Mod">
                     </div>
                 </div>

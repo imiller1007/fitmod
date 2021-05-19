@@ -26,12 +26,12 @@
                         <button type="submit" class="btn btn-dark">Log in</button>
                     </form>
                     <br>
-                    <p>Don't have an account yet? <a href="<?php echo URLROOT; ?>/users/register" class="dark-link">Click here</a> to Sign up!</p>
+                    <p>Don't have an account yet? <a href="<?php echo URLROOT; ?>/users/register" class="link-dark">Click here</a> to Sign up!</p>
                 </div>
             </div>
             <br>
             <div class="row text-center">
-                <a href="#" class="dark-link mx-auto">Forgot my email/password</a>
+                <a href="#" class="link-dark mx-auto">Forgot my email/password</a>
             </div>
         </div>
     </div>

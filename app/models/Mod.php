@@ -31,6 +31,14 @@ class Mod
         return $results;
     }
 
+    public function getUserMods($data){
+        $this->db->query('SELECT * FROM mods WHERE created_by_id = :user_id');
+
+        $this->db->bind(':user_id', $data['userId']);
+
+        return $this->db->resultSet();
+    }
+
     public function getModCount()
     {
         $res = $this->db->query('SELECT COUNT(*) FROM mods');

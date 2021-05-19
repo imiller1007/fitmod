@@ -2,22 +2,17 @@ body {
   background-color: #f3f3f3;
 }
 
-.dark-link {
-  color: darkslategray;
-  text-decoration: underline;
-}
-
 .titleFont {
   font-family: "Montserrat", sans-serif;
 }
 
 /* SCHEDULE PAGE */
 .calendar-table {
-  height: 300px;
-  max-height: 400px;
+  height: 400px;
+  /* overflow: hidden; */
 }
 
-/* ADD NEW MOD PAGE */
+/* FOR ARROW SELECTERS */
 #numSelectCaret:hover {
   color: blue;
   cursor: pointer;

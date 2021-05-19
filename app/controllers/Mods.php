@@ -38,7 +38,8 @@ class Mods extends Controller
         // Saved mods by user
         $savedModIds = array();
         if (isLoggedIn()) {
-            $savedMods = $this->savedModel->getModsSavedByUser($_SESSION['user_id']);
+            $savedData = ['userId' => $_SESSION['user_id']];
+            $savedMods = $this->savedModel->getModsSavedByUser($savedData);
             foreach ($savedMods as $savedMod) {
                 array_push($savedModIds, $savedMod->mod_id);
             }
@@ -137,19 +138,6 @@ class Mods extends Controller
             die(error('Error: Something went wrong'));
         }
 
-    }
-
-    public function test($modId)
-    {
-        $userId = $_SESSION['user_id'];
-
-        print_r($this->modModel->findModById($modId)->created_by_id);
-
-        // if(!$this->savedModel->getSavedModByModId($modId, $userId)){
-        //     echo 'This has not been saved yet';
-        // }else{
-        //     echo 'This has been saved by user';
-        // }
     }
 
     public function add()

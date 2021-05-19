@@ -44,7 +44,7 @@
                         <button type="submit" class="btn btn-dark">Sign up</button>
                     </form>
                     <br>
-                    <p>Already have an account? <a href="<?php echo URLROOT; ?>/users/login" class="dark-link">Click here</a> to log in!</p>
+                    <p>Already have an account? <a href="<?php echo URLROOT; ?>/users/login" class="link-dark">Click here</a> to log in!</p>
                 </div>
             </div>
 
