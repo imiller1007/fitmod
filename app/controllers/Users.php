@@ -6,6 +6,7 @@ class Users extends Controller
     public function __construct()
     {
         $this->userModel = $this->model('User');
+        $this->workoutModel = $this->model('Workout');
     }
 
     public function index()
@@ -139,7 +140,7 @@ class Users extends Controller
 
             // Validate Password
             if(empty($data['password'])){
-                $data['password_err'] = 'Please enter email';
+                $data['password_err'] = 'Please enter password';
             }
 
             // Check for user/email
@@ -159,6 +160,7 @@ class Users extends Controller
                 if($loggedInUser){
                     // Create Session
                     $this->createUserSession($loggedInUser);
+                    setWorkoutStatusSession($this->workoutModel->getCurrentWorkout($_SESSION['user_id']));
                 }else{
                     $data['password_err'] = 'Password incorrect';
 

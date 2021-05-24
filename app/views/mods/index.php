@@ -6,10 +6,9 @@ $totalPages = $data['totalPages'];
 $paginationLink = 'mods';
 ?>
 <div class="container mt-5" id="card-section">
-    <?php flash('add_mod_success'); ?>
     <div class="row">
         <div class="offset-lg-3 offset-xs-0 col-xs-12 col-sm-12 col-lg-6 text-center">
-            <h2 style="font-family: 'Montserrat', sans-serif;">Newest Mods</h2>
+            <h2 class="titleFont">Newest Mods</h2>
             <hr>
         </div>
     </div>
@@ -19,11 +18,42 @@ $paginationLink = 'mods';
     <div class="row">
         <div class="offset-md-2 offset-xs-0"></div>
         <div class="col-xs-12 col-sm-12">
+            <!-- This is to load heart icons for liking -->
+            <div class="d-none">
+                <div id="solidHeart">
+                    <a href="#" class="likeLink">
+                        <h3><i class="fas fa-heart"></i></h3>
+                    </a>
+                </div>
+                <div id="simpleHeart">
+                    <a href="#" class="likeLink">
+                        <h3><i class="far fa-heart"></i></h3>
+                    </a>
+                </div>
+            </div>
 
             <?php foreach ($data['mods'] as $mod) : ?>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title titleFont mb-1"><?php echo $mod->mod_title; ?></h4>
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title titleFont"><?php echo $mod->mod_title; ?></h4>
+                            <?php if (isLoggedIn()) : ?>
+                                <!-- Check if mod has not been saved by user -->
+                                <?php if (!in_array($mod->mod_id, $data['savedMods'])) : ?>
+                                    <a href="#a" class="likeLink" data-mod="<?php echo $mod->mod_id; ?>">
+                                        <h3><i class="far fa-heart"></i></h3>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="#a" class="unlikeLink" data-mod="<?php echo $mod->mod_id; ?>">
+                                        <h3><i class="fas fa-heart"></i></h3>
+                                    </a>
+                                <?php endif; ?>
+                            <?php else : ?>
+                                <a href="#a" class="likeLink" data-mod="<?php echo $mod->mod_id; ?>">
+                                    <h3><i class="far fa-heart"></i></h3>
+                                </a>
+                            <?php endif; ?>
+                        </div>
                         <?php if (isLoggedIn()) : ?>
                             <small class="h6 titleFont">By <?php echo ($mod->created_by_id != $_SESSION['user_id']) ? $mod->userFirst . ' ' . strtoupper(substr($mod->userLast, 0, 1)) . '.' : 'Me' ?></small>
                         <?php else : ?>
@@ -60,22 +90,6 @@ $paginationLink = 'mods';
                                 <?php endfor; ?>
                             </tbody>
                         </table>
-                        <div class="d-flex justify-content-center">
-                            <!-- Check if logged in -->
-                            <?php if (isLoggedIn()) : ?>
-                                <!-- Check if mod was not made by user -->
-                                <?php if ($mod->created_by_id != $_SESSION['user_id']) : ?>
-                                    <!-- Check if mod has not been saved by user -->
-                                    <?php if (!in_array($mod->mod_id, $data['savedMods'])) : ?>
-                                        <button class="saveBtn btn btn-dark" id="saveMod<?php echo $mod->mod_id ?>">Save Mod</button>
-                                    <?php else : ?>
-                                        <button class="deleteBtn btn btn-dark" id="deleteMod<?php echo $mod->mod_id ?>">Saved <i class="fas fa-check"></i></button>
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                            <?php else : ?>
-                                <a href="<?php echo URLROOT ?>/users/login" class="btn btn-dark">Save Mod</a>
-                            <?php endif; ?>
-                        </div>
                         <div class="row mt-2">
                             <span class="text-danger text-center mx-auto modErrorMessage" id="error<?php echo $mod->mod_id ?>"></span>
                         </div>
@@ -94,10 +108,20 @@ $paginationLink = 'mods';
 </div>
 
 <script>
-    $(document.body).on('click', '.saveBtn' ,function(){
 
-        modId = $(this).attr('id').replace('saveMod', '');
+    $(document.body).on('mouseenter', '.likeLink', function() {
+        var solidHeart = $('#solidHeart').find('i').attr('class');
+        $(this).find('i').attr('class', solidHeart);
+    });
 
+    $(document.body).on('mouseleave', '.likeLink', function() {
+        var simpleHeart = $('#simpleHeart').find('i').attr('class');
+        $(this).find('i').attr('class', simpleHeart);
+    });
+
+    $(document.body).on('click', '.likeLink', function() {
+        var modId = $(this).data('mod');
+        var likeLink = $(this);
         $.post('<?php echo URLROOT; ?>/mods/saveModAjax', {
                 modId: modId
             },
@@ -105,7 +129,7 @@ $paginationLink = 'mods';
                 var data = JSON.parse(res);
 
                 if (data.success) {
-                    $('#saveMod' + modId).replaceWith('<button class="deleteBtn btn btn-dark" id="deleteMod' + modId + '">Saved <i class="fas fa-check"></i></button>');
+                    likeLink.replaceWith(`<a href="#a" class="unlikeLink" data-mod="${modId}"><h3><i class="fas fa-heart"></i></h3></a>`);
                 } else {
                     $('.modErrorMessage').slideUp();
                     $('#error' + modId).slideDown();
@@ -114,14 +138,13 @@ $paginationLink = 'mods';
                         $('#error' + modId).slideUp();
                     }, 3000);
                 }
-                console.log(data.message);
             }
         );
     });
 
-    $(document.body).on('click', '.deleteBtn' ,function(){
-
-        modId = $(this).attr('id').replace('deleteMod', '');
+    $(document.body).on('click', '.unlikeLink', function() {
+        var unlikeLink = $(this);
+        var modId = $(this).data('mod');
 
         $.post('<?php echo URLROOT; ?>/mods/unsaveModAjax', {
                 modId: modId
@@ -130,7 +153,7 @@ $paginationLink = 'mods';
                 var data = JSON.parse(res);
 
                 if (data.success) {
-                    $('#deleteMod' + modId).replaceWith('<button class="saveBtn btn btn-dark" id="saveMod' + modId + '">Save Mod</button>');
+                    unlikeLink.replaceWith(`<a href="#a" class="likeLink" data-mod="${modId}"><h3><i class="far fa-heart"></i></h3></a>`);
                 } else {
                     $('.modErrorMessage').slideUp();
                     $('#error' + modId).slideDown();
@@ -139,7 +162,6 @@ $paginationLink = 'mods';
                         $('#error' + modId).slideUp();
                     }, 3000);
                 }
-                console.log(data.message);
             }
         );
     });

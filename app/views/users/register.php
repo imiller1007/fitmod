@@ -11,23 +11,23 @@
                     <form action="<?php echo URLROOT; ?>/users/register" method="post">
                         <div class="form-group mb-3">
                             <label for="user_email">Email</label>
-                            <input type="email" name="user_email" class="form-control form-control <?php echo (!empty($data['user_email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_email']; ?>">
+                            <input type="email" name="user_email" class="form-control form-control <?php echo (!empty($data['user_email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_email']; ?>" required>
                             <span class="invalid-feedback"><?php echo $data['user_email_err']; ?></span>
                         </div>
                         <div class="form-group mb-3">
                             <label for="user_first">First Name</label>
-                            <input type="text" name="user_first" class="form-control form-control <?php echo (!empty($data['user_first_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_first']; ?>">
+                            <input type="text" name="user_first" class="form-control form-control <?php echo (!empty($data['user_first_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_first']; ?>" required>
                             <span class="invalid-feedback"><?php echo $data['user_first_err']; ?></span>
                         </div>
                         <div class="form-group mb-3">
                             <label for="user_last">Last Name</label>
-                            <input type="text" name="user_last" class="form-control form-control <?php echo (!empty($data['user_last_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_last']; ?>">
+                            <input type="text" name="user_last" class="form-control form-control <?php echo (!empty($data['user_last_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_last']; ?>" required>
                             <span class="invalid-feedback"><?php echo $data['user_last_err']; ?></span>
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Password</label>
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" name="password" class="form-control form-control <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>">
+                                <input type="password" name="password" class="form-control form-control <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>" required>
                                     <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
                                 <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
                             </div>
@@ -36,7 +36,7 @@
                         <div class="form-group mb-3">
                             <label for="confirm_pass">Confirm Password</label>
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" name="confirm_pass" class="form-control form-control <?php echo (!empty($data['confirm_pass_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['confirm_pass']; ?>">
+                                <input type="password" name="confirm_pass" class="form-control form-control <?php echo (!empty($data['confirm_pass_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['confirm_pass']; ?>" required>
                                     <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
                                 <span class="invalid-feedback"><?php echo $data['confirm_pass_err']; ?></span>
                             </div>

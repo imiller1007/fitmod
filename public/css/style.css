@@ -6,6 +6,31 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.hoverLink {
+  text-decoration: none;
+}
+
+.hoverLink:hover{
+  text-decoration: underline;
+}
+
+/* Heart shaped links to save mods */
+.likeLink {
+  color: black;
+}
+
+.likeLink:hover {
+  color: black;
+}
+
+.unlikeLink {
+  color: black;
+}
+
+.unlikeLink:hover {
+  color: black;
+}
+
 /* SCHEDULE PAGE */
 .calendar-table {
   height: 400px;

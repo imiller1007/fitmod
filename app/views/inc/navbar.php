@@ -29,12 +29,31 @@
                             Hi, <?php echo $_SESSION['user_first'] .' '. substr($_SESSION['user_last'], 0, 1).'.'; ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#"><strong><i>Start Workout</i></strong> <i class="fas fa-running"></i></a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">My Mods</a></li>
+                            <?php
+                                $urlArr = explode('/',$_SERVER['REQUEST_URI']); 
+                                array_shift($urlArr);
+                                array_shift($urlArr);
+                                $urlMethod = implode('/', $urlArr);
+                            ?>
+                            <?php if($urlMethod != 'workouts/active') : ?>
+                                <?php if($_SESSION['workout'] == 'rest' ) : ?>
+                                    <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/schedule"><strong>Rest Day</strong> <i class="fas fa-mug-hot"></i></a></li>
+                                <?php elseif($_SESSION['workout'] == 'open' ) : ?>
+                                    <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/active"><strong><i>Start Workout</i></strong> <i class="fas fa-running"></i></a></li>
+                                <?php elseif($_SESSION['workout'] == 'started' ) : ?>
+                                    <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/active"><strong><i>Resume Workout</i></strong> <i class="fas fa-running"></i></a></li>
+                                <?php elseif($_SESSION['workout'] == 'closed' ) : ?>
+                                    <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/active"><strong><i>Workout Complete</i></strong> <i class="fas fa-thumbs-up"></i></a></li>
+                                <?php elseif($_SESSION['workout'] == 'none' ) : ?>
+                                    <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/schedule"><strong><i>Set Workout</i></strong> <i class="fas fa-plus"></i></a></li>
+                                <?php endif; ?>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/mods/mymods/">My Mods</a></li>
                             <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/schedule">My Schedule</a></li>
+                            <li><a class="dropdown-item" href="<?php echo URLROOT ?>/workouts/results/">My Results</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

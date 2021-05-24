@@ -11,13 +11,13 @@
                     <form action="<?php echo URLROOT; ?>/users/login" method="post">
                         <div class="mb-3">
                             <label for="user_email">Email address</label>
-                            <input name="user_email" type="email" id="email" class="form-control <?php echo (!empty($data['user_email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_email']; ?>" >
+                            <input name="user_email" type="email" id="email" class="form-control <?php echo (!empty($data['user_email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['user_email']; ?>" required>
                             <span class="invalid-feedback"><?php echo $data['user_email_err']; ?></span>
                         </div>
                         <div class="mb-3">
                             <label for="password">Password</label>
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" name="password" class="form-control form-control <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>">
+                                <input type="password" name="password" class="form-control form-control <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>" required>
                                     <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
                                 <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
                             </div>

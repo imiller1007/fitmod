@@ -9,6 +9,12 @@ class Mods extends Controller
         $this->savedModel = $this->model('SavedMod');
         $this->userModel = $this->model('User');
         $this->exerciseModel = $this->model('Exercise');
+        $this->workoutModel = $this->model('Workout');
+
+        if (isLoggedIn()) {
+           setWorkoutStatusSession($this->workoutModel->getCurrentWorkout($_SESSION['user_id'])); 
+        }
+        
     }
 
     public function index()
@@ -55,6 +61,44 @@ class Mods extends Controller
         $this->view('mods/index', $data);
     }
 
+    public function myMods()
+    {
+        // check if logged in
+        if (!isLoggedIn()) {
+            redirect('users/login');
+        }
+
+        // get page number or default it to 1
+        if (isset($_GET['pageNum'])) {
+            $pageNum = $_GET['pageNum'];
+        } else {
+            $pageNum = 1;
+        }
+
+        if (!is_numeric($pageNum)) {
+            $pageNum = 1;
+        }
+
+        // max records per page
+        $recordsPerPage = 5;
+        $offset = ($pageNum - 1) * $recordsPerPage;
+
+        // get row count, calculate total pages
+        $totalRows = $this->modModel->getUserModCount($_SESSION['user_id']);
+        $totalPages = ceil($totalRows / $recordsPerPage);
+
+        // Get mods for page
+        $mods = $this->modModel->getPaginatedModsUser($offset, $recordsPerPage, $_SESSION['user_id']);
+
+        $data = [
+            'pageNum' => $pageNum,
+            'totalPages' => $totalPages,
+            'mods' => $mods
+        ];
+
+        $this->view('mods/myMods', $data);
+    }
+
     public function saveModAjax()
     {
 
@@ -76,14 +120,6 @@ class Mods extends Controller
         // check if ID exists in DB
         if (!$this->modModel->findModById($modId)) {
             die(error('Error: Mod does not exist'));
-        }
-
-        // get ID of user who created mod
-        $createdById = $this->modModel->findModById($modId)->created_by_id;
-
-        // make sure mod can't be saved by author
-        if ($createdById == $userId) {
-            die(error('Error: Cannot save own mod'));
         }
 
         // check to make sure the mod isn't already saved by user
@@ -215,6 +251,9 @@ class Mods extends Controller
                 if ($inputData['exerciseType' . $i] != 'cardio' && $inputData['exerciseNum' . $i] > 10) {
                     $data['errors']['exerNumErr' . $i] = 'Can not go past the set maximum of 10';
                 }
+                if ($inputData['exerciseType' . $i] == 'cardio' && $inputData['exerciseNum' . $i] > 300) {
+                    $data['errors']['exerNumErr' . $i] = 'Can not go past the maximum of 5 hours';
+                }
             }
 
             // Once form has passed VALIDATION . . .
@@ -256,7 +295,7 @@ class Mods extends Controller
 
                 if ($this->modModel->addMod($modData, $data['numOfExer'])) {
                     flash('add_mod_success', 'Mod successfully added!');
-                    redirect('mods');
+                    redirect('mods/mymods');
                 }
             } else {
                 $this->view('mods/add', $data);

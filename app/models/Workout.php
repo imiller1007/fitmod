@@ -13,9 +13,31 @@ class Workout
     {
         $this->db->query('INSERT INTO workouts (user_id, mod_id, workout_date) VALUES (:user_id, :mod_id, :workout_date)');
         // Bind values
-        $this->db->bind(':user_id,', $data['user_id']);
-        $this->db->bind(':mod_id', $data['mod_id']);
-        $this->db->bind(':workout_date', $data['workout_date']);
+        $this->db->bind(':user_id', $data['userId']);
+        $this->db->bind(':mod_id', $data['modId']);
+        $this->db->bind(':workout_date', $data['workoutDate']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getWorkoutByDate($data){
+        $this->db->query('SELECT * FROM workouts WHERE workout_date = :workout_date AND user_id = :user_id');
+        $this->db->bind(':workout_date', $data['workoutDate']);
+        $this->db->bind(':user_id', $data['userId']);
+        return $this->db->single();
+    }
+
+    public function updateWeekdayWithNewWorkout($data){
+        $this->db->query('UPDATE workouts SET mod_id = :mod_id WHERE workout_date = :workout_date AND user_id = :user_id');
+
+        $this->db->bind(':mod_id', $data['modId']);
+        $this->db->bind(':workout_date', $data['workoutDate']);
+        $this->db->bind(':user_id', $data['userId']);
 
         // Execute
         if ($this->db->execute()) {
@@ -49,12 +71,12 @@ class Workout
     }
 
     public function getModsByRecentWorkouts($data){
-        $this->db->query('SELECT m.mod_id, m.mod_title FROM `workouts` AS w 
+        $this->db->query('SELECT m.mod_id, m.mod_title FROM workouts AS w 
         LEFT JOIN mods as m ON m.mod_id = w.mod_id
         WHERE user_id = :user_id AND w.mod_id != 0 
         GROUP BY w.mod_id 
         ORDER BY assign_date 
-        DESC LIMIT 7;');
+        DESC LIMIT 10');
 
         $this->db->bind(':user_id', $data['userId']);
 
@@ -68,6 +90,41 @@ class Workout
         // Bind values
         $this->db->bind(':cutoff_date', date('Y-m-d', strtotime($data['date'])));
         $this->db->bind(':user_id', $data['userId']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCurrentWorkout($userId){
+        $this->db->query('SELECT * FROM workouts WHERE user_id = :user_id AND workout_date = :workout_date');
+        $this->db->bind(':user_id', $userId);
+        $this->db->bind(':workout_date', date('Y-m-d'));
+        return $this->db->single();
+    }
+
+    public function startWorkout($workoutId){
+        $this->db->query('UPDATE workouts SET status = "started" WHERE workout_id = :workout_id');
+
+        // Bind values
+        $this->db->bind(':workout_id', $workoutId);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function closeWorkout($workoutId){
+        $this->db->query('UPDATE workouts SET status = "closed" WHERE workout_id = :workout_id');
+
+        // Bind values
+        $this->db->bind(':workout_id', $workoutId);
 
         // Execute
         if ($this->db->execute()) {

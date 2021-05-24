@@ -33,3 +33,17 @@ if (d > 3 && d < 21) return 'th';
         default: return "th";
     }
 }
+
+// Format date (yyyy-mm-dd)
+const formatDate = function(date) {
+    var d = new Date(date),
+        month = '' + (d.getUTCMonth() + 1),
+        day = '' + d.getUTCDate(),
+        year = d.getFullYear();
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}

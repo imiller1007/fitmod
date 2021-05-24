@@ -34,3 +34,15 @@
             return false;
         }
     }
+
+    function setWorkoutStatusSession($assignedWorkout = null){
+        if($assignedWorkout == null){
+            $_SESSION['workout'] = 'none';
+        }else{
+            if($assignedWorkout->mod_id == 0){
+                $_SESSION['workout'] = 'rest';
+            }else{
+                $_SESSION['workout'] = $assignedWorkout->status;
+            }
+        }
+    }
