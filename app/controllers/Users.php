@@ -84,10 +84,17 @@ class Users extends Controller
                 
                 // Register User
                 if($this->userModel->register($data)){
-                    flash('register_success', 'Account created!');
-                    redirect('users/login');
+                    $loggedInUser = $this->userModel->login($data['user_email'], $data['confirm_pass']);
+                    if($loggedInUser){
+                        // Create Session
+                        $this->createUserSession($loggedInUser);
+                        setWorkoutStatusSession($this->workoutModel->getCurrentWorkout($_SESSION['user_id']));
+                    }else{
+                        $data['password_err'] = 'Password incorrect';
+    
+                        $this->view('users/login', $data);
+                    }
                 }
-
 
             }else{
                 // Load view with errors
