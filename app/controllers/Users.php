@@ -192,6 +192,7 @@ class Users extends Controller
         $_SESSION['user_first'] = $user->user_first;
         $_SESSION['user_last'] = $user->user_last;
         $_SESSION['user_email'] = $user->user_email;
+        $_SESSION['admin'] = $user->admin;
         //redirect
         redirect('mods');
     }

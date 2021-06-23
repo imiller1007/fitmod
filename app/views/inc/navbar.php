@@ -4,7 +4,7 @@
     <div class="container">
         <a class="navbar-brand text-white" href="<?php echo URLROOT; ?>/mods">
             <h2>
-                <fit style="font-family: 'Montserrat', sans-serif;">FIT</fit><strong><em>MOD</em></strong><i class="fas fa-running"></i>
+                <fit style="font-family: 'Montserrat', sans-serif;">FIT</fit><strong><em>MOD</em></strong><i class="fas fa-running"></i><small style="font-size: 12px;">(alpha ver 0.1)</small>
             </h2>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,12 @@
                             <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/mods/mymods/">My Mods</a></li>
                             <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/workouts/schedule">My Schedule</a></li>
                             <li><a class="dropdown-item" href="<?php echo URLROOT ?>/workouts/results/">My Results</a></li>
+                            <?php if($_SESSION['admin'] == 1) : ?>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="<?php echo URLROOT ?>/exercises/">Admin: Exercises</a></li>
+                            <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

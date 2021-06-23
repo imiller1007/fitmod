@@ -62,4 +62,34 @@ class Set
             return false;
         }
     }
+
+    public function updateSet($data)
+    {
+        $this->db->query('UPDATE `sets` SET set_value = :set_value WHERE set_id = :set_id');
+
+        $this->db->bind(':set_value', $data['set_value']);
+        $this->db->bind(':set_id', $data['set_id']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateAdjSet($data){
+        $this->db->query('UPDATE `sets` SET set_value = :set_value, set_weight = :set_weight WHERE set_id = :set_id');
+
+        $this->db->bind(':set_value', $data['set_value']);
+        $this->db->bind(':set_weight', $data['set_weight']);
+        $this->db->bind(':set_id', $data['set_id']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }    

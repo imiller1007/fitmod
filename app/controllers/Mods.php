@@ -31,7 +31,7 @@ class Mods extends Controller
         }
 
         // max records per page
-        $recordsPerPage = 5;
+        $recordsPerPage = 25;
         $offset = ($pageNum - 1) * $recordsPerPage;
 
         // get row count, calculate total pages
@@ -80,7 +80,7 @@ class Mods extends Controller
         }
 
         // max records per page
-        $recordsPerPage = 5;
+        $recordsPerPage = 25;
         $offset = ($pageNum - 1) * $recordsPerPage;
 
         // get row count, calculate total pages
@@ -253,6 +253,15 @@ class Mods extends Controller
                 }
                 if ($inputData['exerciseType' . $i] == 'cardio' && $inputData['exerciseNum' . $i] > 300) {
                     $data['errors']['exerNumErr' . $i] = 'Can not go past the maximum of 5 hours';
+                }
+            }
+
+            // check for duplicates in mod
+            for ($i = 1; $i <= $data['numOfExer']; $i++) {
+                for($j = 1; $j <= $data['numOfExer']; $j++){
+                    if($j != $i && strtolower($inputData['exerciseName' . $i]) == strtolower($inputData['exerciseName' . $j])){
+                        $data['errors']['exerNameErr' . $j] = 'Can not have the same exercise more than once in a workout mod';
+                    }
                 }
             }
 

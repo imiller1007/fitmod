@@ -226,6 +226,50 @@ class Workouts extends Controller
 
     }
 
+    public function editExerciseAjax()
+    {
+        // check if logged in
+        if (!isLoggedIn()) {
+            redirect('users/login');
+        }
+
+        // check if this method was called from a post call
+        if (!isset($_POST['set_id'])) {
+            redirect('workouts/schedule');
+        }
+
+        $dbData = [
+            'set_id' => $_POST['set_id'],
+            'set_value' => $_POST['set_value'],
+            'set_weight' => $_POST['set_weight']
+        ];
+
+        if($_POST['exerType'] == 'adjWt'){
+            if($this->setModel->updateAdjSet($dbData)){
+                $message = 'exercise added!';
+                $response = array();
+                $response['success'] = true;
+                $response['message'] = $message;
+                echo json_encode($response);
+            }else{
+                $err = 'Something went wrong while editing exercise';
+                die(error($err));
+            }
+        }else{
+            if($this->setModel->updateSet($dbData)){
+                $message = 'exercise added!';
+                $response = array();
+                $response['success'] = true;
+                $response['message'] = $message;
+                echo json_encode($response);
+            }else{
+                $err = 'Something went wrong while editing exercise';
+                die(error($err));
+            }
+        }
+
+    }
+
     public function assignModAjax()
     {
         // check if logged in

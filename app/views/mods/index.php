@@ -54,11 +54,15 @@ $paginationLink = 'mods';
                                 </a>
                             <?php endif; ?>
                         </div>
+                        <small class="h6 titleFont">
                         <?php if (isLoggedIn()) : ?>
-                            <small class="h6 titleFont">By <?php echo ($mod->created_by_id != $_SESSION['user_id']) ? $mod->userFirst . ' ' . strtoupper(substr($mod->userLast, 0, 1)) . '.' : 'Me' ?></small>
+                            By <?php echo ($mod->created_by_id != $_SESSION['user_id']) ? $mod->userFirst . ' ' . strtoupper(substr($mod->userLast, 0, 1)) . '.' : 'Me' ?>
                         <?php else : ?>
-                            <small class="h6 titleFont">By <?php echo $mod->userFirst . ' ' . strtoupper(substr($mod->userLast, 0, 1)) . '.' ?></small>
+                            By <?php echo $mod->userFirst . ' ' . strtoupper(substr($mod->userLast, 0, 1)) . '.' ?>
                         <?php endif; ?>
+                        &nbsp;<strong>·</strong>&nbsp;
+                            <?php echo timeDisplay($mod->modCreated) ?>
+                        </small>
                         <p class="card-text mb-1"><span class="titleFont">Description: </span><?php echo $mod->mod_desc; ?></p>
                         <table class="table">
                             <thead>
