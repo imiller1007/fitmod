@@ -2,7 +2,7 @@
     <?php echo ($i > 1 ? '<hr>' : ''); ?>
     <h4 id="exerTitle<?= $i ?>" class="card-title titleFont">Exercise <?php echo $i ?></h4>
     <div class="mb-3">
-        <label class="form-label" for="exerciseName<?= $i ?>">Exercise Name</label>
+        <label class="form-label" for="exerciseName<?= $i ?>">Exercise Name <small class="nameStatus<?php echo $i ?>"></small></label>
         <input type="text" list="exerciseOptions" maxlength="80" class="form-control <?php echo (!empty($errors['exerNameErr' . $i])) ? 'is-invalid' : ''; ?>" name="exerciseName<?= $i ?>" id="exerciseName<?= $i ?>" value="<?php echo $inputData['exerciseName' . $i] ?>" oninput="checkIfExerciseExists(<?= $i ?>)">
         <datalist id="exerciseOptions">
             <?php foreach ($data['exercises'] as $exercise) : ?>

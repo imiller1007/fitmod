@@ -176,8 +176,10 @@ function selectCheck($selectName, $selectValue)
     function showHideNewExercise(found, exerciseNum, exerType) {
         if (found == true) {
             $("#newExerciseInfo" + exerciseNum).hide();
+            $('.nameStatus' + exerciseNum).html('<b class="text-primary">(Existing Exercise)</b>');
         } else {
             $("#newExerciseInfo" + exerciseNum).show();
+            $('.nameStatus' + exerciseNum).html('');
         }
 
         if (exerType == "cardio") {
